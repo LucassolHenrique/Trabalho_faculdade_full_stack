@@ -1,0 +1,559 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-05-07T00:00:00.000Z",
+  "__version": 4,
+  "_collections": [
+    {
+      "_id": "col_produtos_categorias",
+      "parentId": null,
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "name": "API Produtos e Categorias - TESTES COMPLETOS",
+      "description": "Coleção completa com todos os testes: 2 CRUDs, Relacionamento Many-to-One, Funcionalidade Especial, Validações e Erros",
+      "scope": "collection",
+      "_type": "collection",
+      "environment": {
+        "categoria_id_1": "550e8400-e29b-41d4-a716-446655440001",
+        "categoria_id_2": "550e8400-e29b-41d4-a716-446655440002",
+        "categoria_id_3": "550e8400-e29b-41d4-a716-446655440003",
+        "produto_id_1": "660e8400-e29b-41d4-a716-446655440001",
+        "produto_id_2": "660e8400-e29b-41d4-a716-446655440002"
+      },
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1715040000000,
+      "color": "#0088ff"
+    }
+  ],
+  "_requests": [
+    {
+      "_id": "req_001_health",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/health",
+      "name": "01 - Health Check",
+      "description": "Verifica se API está funcionando - Status Esperado: 200",
+      "method": "GET",
+      "_type": "request",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1715040001000
+    },
+    {
+      "_id": "req_002_criar_cat_1",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/categorias",
+      "name": "02 - Criar Categoria 1: Eletrônicos",
+      "description": "POST - Criar primeira categoria - Status Esperado: 201",
+      "method": "POST",
+      "_type": "request",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Eletrônicos\",\n  \"descricao\": \"Produtos eletrônicos em geral\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1715039999000
+    },
+    {
+      "_id": "req_003_criar_cat_2",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/categorias",
+      "name": "03 - Criar Categoria 2: Livros",
+      "description": "POST - Criar segunda categoria - Status Esperado: 201",
+      "method": "POST",
+      "_type": "request",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Livros\",\n  \"descricao\": \"Livros e publicações\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1715039998000
+    },
+    {
+      "_id": "req_004_criar_cat_3",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/categorias",
+      "name": "04 - Criar Categoria 3: Roupas",
+      "description": "POST - Criar terceira categoria - Status Esperado: 201",
+      "method": "POST",
+      "_type": "request",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Roupas\",\n  \"descricao\": \"Roupas e acessórios\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1715039997000
+    },
+    {
+      "_id": "req_005_erro_cat_sem_nome",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/categorias",
+      "name": "05 - ERRO - Categoria sem nome (Validação)",
+      "description": "POST - Tentar criar sem nome - Status Esperado: 400 Bad Request",
+      "method": "POST",
+      "_type": "request",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"\",\n  \"descricao\": \"Sem nome\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1715039996000
+    },
+    {
+      "_id": "req_006_listar_categorias",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/categorias",
+      "name": "06 - Listar Todas as Categorias",
+      "description": "GET - Retorna todas as 3 categorias - Status Esperado: 200",
+      "method": "GET",
+      "_type": "request",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1715039995000
+    },
+    {
+      "_id": "req_007_obter_categoria",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/categorias/{{ categoria_id_1 }}",
+      "name": "07 - Obter Categoria por ID",
+      "description": "GET - Retorna categoria específica - Copie um ID do teste 06 e cole aqui",
+      "method": "GET",
+      "_type": "request",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1715039994000
+    },
+    {
+      "_id": "req_008_erro_categoria_invalida",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/categorias/id-invalido-123",
+      "name": "08 - ERRO - Categoria com ID inválido (404)",
+      "description": "GET - ID inexistente - Status Esperado: 404 Not Found",
+      "method": "GET",
+      "_type": "request",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1715039993000
+    },
+    {
+      "_id": "req_009_criar_produto_1",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/produtos",
+      "name": "09 - Criar Produto 1: Notebook (Eletrônicos)",
+      "description": "POST - Criar produto com relacionamento Many-to-One - Status Esperado: 201. Use ID de Eletrônicos do teste 06",
+      "method": "POST",
+      "_type": "request",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Notebook Dell\",\n  \"preco\": 3500.00,\n  \"categoriaId\": \"{{ categoria_id_1 }}\",\n  \"descricao\": \"Notebook de alto desempenho com i7\",\n  \"estoque\": 5\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1715039992000
+    },
+    {
+      "_id": "req_010_criar_produto_2",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/produtos",
+      "name": "10 - Criar Produto 2: Mouse (Eletrônicos)",
+      "description": "POST - Criar segundo produto - Status Esperado: 201",
+      "method": "POST",
+      "_type": "request",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Mouse Wireless\",\n  \"preco\": 89.90,\n  \"categoriaId\": \"{{ categoria_id_1 }}\",\n  \"descricao\": \"Mouse sem fio com bateria de longa duração\",\n  \"estoque\": 20\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1715039991000
+    },
+    {
+      "_id": "req_011_criar_produto_3",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/produtos",
+      "name": "11 - Criar Produto 3: Livro (Livros)",
+      "description": "POST - Criar produto em outra categoria - Status Esperado: 201",
+      "method": "POST",
+      "_type": "request",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Clean Code\",\n  \"preco\": 95.00,\n  \"categoriaId\": \"{{ categoria_id_2 }}\",\n  \"descricao\": \"Livro sobre boas práticas de programação\",\n  \"estoque\": 15\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1715039990000
+    },
+    {
+      "_id": "req_012_criar_produto_4",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/produtos",
+      "name": "12 - Criar Produto 4: Camiseta (Roupas)",
+      "description": "POST - Criar produto em terceira categoria - Status Esperado: 201",
+      "method": "POST",
+      "_type": "request",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Camiseta Básica\",\n  \"preco\": 49.90,\n  \"categoriaId\": \"{{ categoria_id_3 }}\",\n  \"descricao\": \"Camiseta de algodão básica\",\n  \"estoque\": 50\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1715039989000
+    },
+    {
+      "_id": "req_013_erro_preco_negativo",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/produtos",
+      "name": "13 - ERRO - Produto com preço negativo (Validação)",
+      "description": "POST - Tentar criar com preço -100 - Status Esperado: 400 Bad Request",
+      "method": "POST",
+      "_type": "request",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Produto Inválido\",\n  \"preco\": -100,\n  \"categoriaId\": \"{{ categoria_id_1 }}\",\n  \"estoque\": 10\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1715039988000
+    },
+    {
+      "_id": "req_014_erro_categoria_inexistente",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/produtos",
+      "name": "14 - ERRO - Produto com categoria inexistente",
+      "description": "POST - Tentar associar categoria que não existe - Status Esperado: 404 Not Found",
+      "method": "POST",
+      "_type": "request",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Produto Órfão\",\n  \"preco\": 100.00,\n  \"categoriaId\": \"categoria-inexistente-123\",\n  \"estoque\": 5\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1715039987000
+    },
+    {
+      "_id": "req_015_erro_produto_sem_nome",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/produtos",
+      "name": "15 - ERRO - Produto sem nome (Validação)",
+      "description": "POST - Tentar criar sem nome - Status Esperado: 400 Bad Request",
+      "method": "POST",
+      "_type": "request",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"\",\n  \"preco\": 100.00,\n  \"categoriaId\": \"{{ categoria_id_1 }}\",\n  \"estoque\": 5\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1715039986000
+    },
+    {
+      "_id": "req_016_listar_produtos",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/produtos",
+      "name": "16 - Listar Todos os Produtos",
+      "description": "GET - Retorna todos os 4 produtos com suas categorias - Status Esperado: 200",
+      "method": "GET",
+      "_type": "request",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1715039985000
+    },
+    {
+      "_id": "req_017_obter_produto",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/produtos/{{ produto_id_1 }}",
+      "name": "17 - Obter Produto por ID",
+      "description": "GET - Retorna produto específico - Copie um ID do teste 16 e cole aqui",
+      "method": "GET",
+      "_type": "request",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1715039984000
+    },
+    {
+      "_id": "req_018_listar_por_categoria_eletro",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/produtos/categoria/{{ categoria_id_1 }}",
+      "name": "18 - FUNCIONALIDADE ESPECIAL: Produtos de Eletrônicos",
+      "description": "GET - Retorna APENAS produtos de Eletrônicos - Status Esperado: 200 com 2 produtos",
+      "method": "GET",
+      "_type": "request",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1715039983000
+    },
+    {
+      "_id": "req_019_listar_por_categoria_livros",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/produtos/categoria/{{ categoria_id_2 }}",
+      "name": "19 - FUNCIONALIDADE ESPECIAL: Produtos de Livros",
+      "description": "GET - Retorna APENAS produtos de Livros - Status Esperado: 200 com 1 produto",
+      "method": "GET",
+      "_type": "request",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1715039982000
+    },
+    {
+      "_id": "req_020_listar_por_categoria_roupas",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/produtos/categoria/{{ categoria_id_3 }}",
+      "name": "20 - FUNCIONALIDADE ESPECIAL: Produtos de Roupas",
+      "description": "GET - Retorna APENAS produtos de Roupas - Status Esperado: 200 com 1 produto",
+      "method": "GET",
+      "_type": "request",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1715039981000
+    },
+    {
+      "_id": "req_021_atualizar_categoria",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/categorias/{{ categoria_id_1 }}",
+      "name": "21 - Atualizar Categoria",
+      "description": "PUT - Atualiza categoria existente - Status Esperado: 200",
+      "method": "PUT",
+      "_type": "request",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Eletrônicos Premium\",\n  \"descricao\": \"Produtos eletrônicos de alta qualidade\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1715039980000
+    },
+    {
+      "_id": "req_022_atualizar_produto",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/produtos/{{ produto_id_1 }}",
+      "name": "22 - Atualizar Produto",
+      "description": "PUT - Atualiza produto existente - Status Esperado: 200",
+      "method": "PUT",
+      "_type": "request",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Notebook Dell XPS\",\n  \"preco\": 4500.00,\n  \"estoque\": 3\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1715039979000
+    },
+    {
+      "_id": "req_023_erro_atualizar_preco_invalido",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/produtos/{{ produto_id_1 }}",
+      "name": "23 - ERRO - Atualizar com preço inválido",
+      "description": "PUT - Tentar atualizar com preço negativo - Status Esperado: 400 Bad Request",
+      "method": "PUT",
+      "_type": "request",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Produto\",\n  \"preco\": -50\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1715039978000
+    },
+    {
+      "_id": "req_024_erro_deletar_categoria_invalida",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/categorias/categoria-inexistente-999",
+      "name": "24 - ERRO - Deletar categoria inexistente",
+      "description": "DELETE - Tentar deletar categoria que não existe - Status Esperado: 404 Not Found",
+      "method": "DELETE",
+      "_type": "request",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1715039977000
+    },
+    {
+      "_id": "req_025_deletar_produto",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/produtos/{{ produto_id_1 }}\n",
+      "name": "25 - Deletar Produto",
+      "description": "DELETE - Deleta produto existente - Status Esperado: 204 No Content",
+      "method": "DELETE",
+      "_type": "request",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1715039976000
+    },
+    {
+      "_id": "req_026_deletar_categoria",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/categorias/{{ categoria_id_3 }}",
+      "name": "26 - Deletar Categoria",
+      "description": "DELETE - Deleta categoria existente - Status Esperado: 204 No Content",
+      "method": "DELETE",
+      "_type": "request",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1715039975000
+    }
+  ],
+  "__folders": []
+}

@@ -1,0 +1,249 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-05-07T00:00:00.000Z",
+  "__version": 4,
+  "_collections": [
+    {
+      "_id": "col_produtos_categorias",
+      "parentId": null,
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "name": "API Produtos e Categorias",
+      "description": "Coleção de testes para API de Gerenciamento de Produtos e Categorias",
+      "scope": "collection",
+      "_type": "collection",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1715040000000,
+      "color": "#0088ff"
+    }
+  ],
+  "_requests": [
+    {
+      "_id": "req_health",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/health",
+      "name": "Health Check",
+      "description": "Verificar saúde da API",
+      "method": "GET",
+      "_type": "request",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1715040000000
+    },
+    {
+      "_id": "req_get_all_categorias",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/categorias",
+      "name": "Listar Todas as Categorias",
+      "description": "Retorna lista de todas as categorias",
+      "method": "GET",
+      "_type": "request",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1715039990000
+    },
+    {
+      "_id": "req_create_categoria",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/categorias",
+      "name": "Criar Categoria",
+      "description": "Cria uma nova categoria",
+      "method": "POST",
+      "_type": "request",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Eletrônicos\",\n  \"descricao\": \"Produtos eletrônicos em geral\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1715039980000
+    },
+    {
+      "_id": "req_get_categoria_by_id",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/categorias/{{ categoria_id }}",
+      "name": "Obter Categoria por ID",
+      "description": "Retorna uma categoria específica pelo ID. Substitua {{ categoria_id }} pelo ID da categoria",
+      "method": "GET",
+      "_type": "request",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1715039970000
+    },
+    {
+      "_id": "req_update_categoria",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/categorias/{{ categoria_id }}",
+      "name": "Atualizar Categoria",
+      "description": "Atualiza uma categoria existente. Substitua {{ categoria_id }} pelo ID da categoria",
+      "method": "PUT",
+      "_type": "request",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Eletrônicos Premium\",\n  \"descricao\": \"Produtos eletrônicos de alta qualidade\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1715039960000
+    },
+    {
+      "_id": "req_delete_categoria",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/categorias/{{ categoria_id }}",
+      "name": "Deletar Categoria",
+      "description": "Deleta uma categoria. Substitua {{ categoria_id }} pelo ID da categoria",
+      "method": "DELETE",
+      "_type": "request",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1715039950000
+    },
+    {
+      "_id": "req_get_all_produtos",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/produtos",
+      "name": "Listar Todos os Produtos",
+      "description": "Retorna lista de todos os produtos",
+      "method": "GET",
+      "_type": "request",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1715039940000
+    },
+    {
+      "_id": "req_create_produto",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/produtos",
+      "name": "Criar Produto",
+      "description": "Cria um novo produto. Substitua categoria_id pelo ID de uma categoria existente",
+      "method": "POST",
+      "_type": "request",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Notebook Dell\",\n  \"preco\": 3500.00,\n  \"categoriaId\": \"{{ categoria_id }}\",\n  \"descricao\": \"Notebook de alto desempenho\",\n  \"estoque\": 10\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1715039930000
+    },
+    {
+      "_id": "req_get_produto_by_id",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/produtos/{{ produto_id }}",
+      "name": "Obter Produto por ID",
+      "description": "Retorna um produto específico pelo ID. Substitua {{ produto_id }} pelo ID do produto",
+      "method": "GET",
+      "_type": "request",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1715039920000
+    },
+    {
+      "_id": "req_get_produtos_by_categoria",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/produtos/categoria/{{ categoria_id }}",
+      "name": "Listar Produtos por Categoria",
+      "description": "Retorna lista de produtos de uma categoria específica. Substitua {{ categoria_id }} pelo ID da categoria",
+      "method": "GET",
+      "_type": "request",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1715039910000
+    },
+    {
+      "_id": "req_update_produto",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/produtos/{{ produto_id }}",
+      "name": "Atualizar Produto",
+      "description": "Atualiza um produto existente. Substitua {{ produto_id }} pelo ID do produto",
+      "method": "PUT",
+      "_type": "request",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Notebook Dell Inspiron\",\n  \"preco\": 3200.00,\n  \"descricao\": \"Notebook atualizando informações\",\n  \"estoque\": 8\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1715039900000
+    },
+    {
+      "_id": "req_delete_produto",
+      "parentId": "col_produtos_categorias",
+      "modified": 1715040000000,
+      "created": 1715040000000,
+      "url": "http://localhost:3000/api/produtos/{{ produto_id }}",
+      "name": "Deletar Produto",
+      "description": "Deleta um produto. Substitua {{ produto_id }} pelo ID do produto",
+      "method": "DELETE",
+      "_type": "request",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1715039890000
+    }
+  ],
+  "__folders": []
+}

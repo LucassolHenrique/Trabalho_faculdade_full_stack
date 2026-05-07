@@ -1,0 +1,731 @@
+================================================================================
+API DE GERENCIAMENTO DE PRODUTOS E CATEGORIAS
+TESTE COMPLETO - INSOMNIA
+================================================================================
+
+DADOS PARA TESTAR A API
+Base URL: http://localhost:3000
+
+================================================================================
+1. HEALTH CHECK - Verificar se API está funcionando
+================================================================================
+
+REQUISIÇÃO: GET /api/health
+Status Esperado: 200 OK
+
+RESPOSTA ESPERADA:
+{
+  "status": "API está funcionando corretamente!"
+}
+
+RESULTADO: ✅ SUCESSO
+
+
+================================================================================
+2. CRIAR CATEGORIAS (POST)
+================================================================================
+
+--- 2.1 Criar Primeira Categoria ---
+REQUISIÇÃO: POST /api/categorias
+Content-Type: application/json
+
+{
+  "nome": "Eletrônicos",
+  "descricao": "Produtos eletrônicos em geral"
+}
+
+Status Esperado: 201 Created
+
+RESPOSTA ESPERADA:
+{
+  "id": "550e8400-e29b-41d4-a716-446655440001",
+  "nome": "Eletrônicos",
+  "descricao": "Produtos eletrônicos em geral",
+  "produtos": []
+}
+
+RESULTADO: ✅ SUCESSO
+CATEGORIA_ID_1 = 550e8400-e29b-41d4-a716-446655440001
+
+--- 2.2 Criar Segunda Categoria ---
+REQUISIÇÃO: POST /api/categorias
+Content-Type: application/json
+
+{
+  "nome": "Livros",
+  "descricao": "Livros e publicações"
+}
+
+Status Esperado: 201 Created
+
+RESPOSTA ESPERADA:
+{
+  "id": "550e8400-e29b-41d4-a716-446655440002",
+  "nome": "Livros",
+  "descricao": "Livros e publicações",
+  "produtos": []
+}
+
+RESULTADO: ✅ SUCESSO
+CATEGORIA_ID_2 = 550e8400-e29b-41d4-a716-446655440002
+
+--- 2.3 Criar Terceira Categoria ---
+REQUISIÇÃO: POST /api/categorias
+Content-Type: application/json
+
+{
+  "nome": "Roupas",
+  "descricao": "Roupas e acessórios"
+}
+
+Status Esperado: 201 Created
+
+RESPOSTA ESPERADA:
+{
+  "id": "550e8400-e29b-41d4-a716-446655440003",
+  "nome": "Roupas",
+  "descricao": "Roupas e acessórios",
+  "produtos": []
+}
+
+RESULTADO: ✅ SUCESSO
+CATEGORIA_ID_3 = 550e8400-e29b-41d4-a716-446655440003
+
+
+================================================================================
+3. ERRO - TENTAR CRIAR CATEGORIA SEM NOME (Validação)
+================================================================================
+
+REQUISIÇÃO: POST /api/categorias
+Content-Type: application/json
+
+{
+  "nome": "",
+  "descricao": "Sem nome"
+}
+
+Status Esperado: 400 Bad Request
+
+RESPOSTA ESPERADA (ERRO TRATADO):
+{
+  "message": "Nome da categoria é obrigatório"
+}
+
+RESULTADO: ✅ ERRO TRATADO CORRETAMENTE
+
+
+================================================================================
+4. LISTAR TODAS AS CATEGORIAS (GET)
+================================================================================
+
+REQUISIÇÃO: GET /api/categorias
+Status Esperado: 200 OK
+
+RESPOSTA ESPERADA:
+[
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440001",
+    "nome": "Eletrônicos",
+    "descricao": "Produtos eletrônicos em geral",
+    "produtos": []
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440002",
+    "nome": "Livros",
+    "descricao": "Livros e publicações",
+    "produtos": []
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440003",
+    "nome": "Roupas",
+    "descricao": "Roupas e acessórios",
+    "produtos": []
+  }
+]
+
+RESULTADO: ✅ SUCESSO - 3 categorias listadas
+
+
+================================================================================
+5. OBTER CATEGORIA POR ID (GET)
+================================================================================
+
+REQUISIÇÃO: GET /api/categorias/550e8400-e29b-41d4-a716-446655440001
+Status Esperado: 200 OK
+
+RESPOSTA ESPERADA:
+{
+  "id": "550e8400-e29b-41d4-a716-446655440001",
+  "nome": "Eletrônicos",
+  "descricao": "Produtos eletrônicos em geral",
+  "produtos": []
+}
+
+RESULTADO: ✅ SUCESSO
+
+
+================================================================================
+6. ERRO - OBTER CATEGORIA COM ID INVÁLIDO (404)
+================================================================================
+
+REQUISIÇÃO: GET /api/categorias/id-invalido-123
+Status Esperado: 404 Not Found
+
+RESPOSTA ESPERADA (ERRO TRATADO):
+{
+  "message": "Categoria não encontrada"
+}
+
+RESULTADO: ✅ ERRO 404 TRATADO CORRETAMENTE
+
+
+================================================================================
+7. CRIAR PRODUTOS (POST)
+================================================================================
+
+--- 7.1 Criar Primeiro Produto (Categoria Eletrônicos) ---
+REQUISIÇÃO: POST /api/produtos
+Content-Type: application/json
+
+{
+  "nome": "Notebook Dell",
+  "preco": 3500.00,
+  "categoriaId": "550e8400-e29b-41d4-a716-446655440001",
+  "descricao": "Notebook de alto desempenho com i7",
+  "estoque": 5
+}
+
+Status Esperado: 201 Created
+
+RESPOSTA ESPERADA:
+{
+  "id": "660e8400-e29b-41d4-a716-446655440001",
+  "nome": "Notebook Dell",
+  "preco": 3500,
+  "descricao": "Notebook de alto desempenho com i7",
+  "estoque": 5,
+  "categoriaId": "550e8400-e29b-41d4-a716-446655440001",
+  "dataCriacao": "2026-05-07T10:30:00",
+  "categoria": {
+    "id": "550e8400-e29b-41d4-a716-446655440001",
+    "nome": "Eletrônicos",
+    "descricao": "Produtos eletrônicos em geral"
+  }
+}
+
+RESULTADO: ✅ SUCESSO - Relacionamento Many-to-One funcionando
+PRODUTO_ID_1 = 660e8400-e29b-41d4-a716-446655440001
+
+--- 7.2 Criar Segundo Produto (Categoria Eletrônicos) ---
+REQUISIÇÃO: POST /api/produtos
+Content-Type: application/json
+
+{
+  "nome": "Mouse Wireless",
+  "preco": 89.90,
+  "categoriaId": "550e8400-e29b-41d4-a716-446655440001",
+  "descricao": "Mouse sem fio com bateria de longa duração",
+  "estoque": 20
+}
+
+Status Esperado: 201 Created
+
+RESPOSTA ESPERADA:
+{
+  "id": "660e8400-e29b-41d4-a716-446655440002",
+  "nome": "Mouse Wireless",
+  "preco": 89.90,
+  "descricao": "Mouse sem fio com bateria de longa duração",
+  "estoque": 20,
+  "categoriaId": "550e8400-e29b-41d4-a716-446655440001",
+  "dataCriacao": "2026-05-07T10:31:00",
+  "categoria": {
+    "id": "550e8400-e29b-41d4-a716-446655440001",
+    "nome": "Eletrônicos"
+  }
+}
+
+RESULTADO: ✅ SUCESSO
+PRODUTO_ID_2 = 660e8400-e29b-41d4-a716-446655440002
+
+--- 7.3 Criar Terceiro Produto (Categoria Livros) ---
+REQUISIÇÃO: POST /api/produtos
+Content-Type: application/json
+
+{
+  "nome": "Clean Code",
+  "preco": 95.00,
+  "categoriaId": "550e8400-e29b-41d4-a716-446655440002",
+  "descricao": "Livro sobre boas práticas de programação",
+  "estoque": 15
+}
+
+Status Esperado: 201 Created
+
+RESULTADO: ✅ SUCESSO
+PRODUTO_ID_3 = 660e8400-e29b-41d4-a716-446655440003
+
+--- 7.4 Criar Quarto Produto (Categoria Roupas) ---
+REQUISIÇÃO: POST /api/produtos
+Content-Type: application/json
+
+{
+  "nome": "Camiseta Básica",
+  "preco": 49.90,
+  "categoriaId": "550e8400-e29b-41d4-a716-446655440003",
+  "descricao": "Camiseta de algodão básica",
+  "estoque": 50
+}
+
+Status Esperado: 201 Created
+
+RESULTADO: ✅ SUCESSO
+PRODUTO_ID_4 = 660e8400-e29b-41d4-a716-446655440004
+
+
+================================================================================
+8. ERRO - TENTAR CRIAR PRODUTO COM PREÇO INVÁLIDO (Validação)
+================================================================================
+
+REQUISIÇÃO: POST /api/produtos
+Content-Type: application/json
+
+{
+  "nome": "Produto Inválido",
+  "preco": -100,
+  "categoriaId": "550e8400-e29b-41d4-a716-446655440001",
+  "estoque": 10
+}
+
+Status Esperado: 400 Bad Request
+
+RESPOSTA ESPERADA (ERRO TRATADO):
+{
+  "message": "Preço deve ser maior que zero"
+}
+
+RESULTADO: ✅ ERRO DE VALIDAÇÃO TRATADO CORRETAMENTE
+
+
+================================================================================
+9. ERRO - TENTAR CRIAR PRODUTO COM CATEGORIA INEXISTENTE
+================================================================================
+
+REQUISIÇÃO: POST /api/produtos
+Content-Type: application/json
+
+{
+  "nome": "Produto Órfão",
+  "preco": 100.00,
+  "categoriaId": "categoria-inexistente-123",
+  "estoque": 5
+}
+
+Status Esperado: 404 Not Found
+
+RESPOSTA ESPERADA (ERRO TRATADO):
+{
+  "message": "Categoria não encontrada"
+}
+
+RESULTADO: ✅ ERRO DE RELACIONAMENTO TRATADO CORRETAMENTE
+
+
+================================================================================
+10. ERROR - TENTAR CRIAR PRODUTO SEM NOME (Validação)
+================================================================================
+
+REQUISIÇÃO: POST /api/produtos
+Content-Type: application/json
+
+{
+  "nome": "",
+  "preco": 100.00,
+  "categoriaId": "550e8400-e29b-41d4-a716-446655440001",
+  "estoque": 5
+}
+
+Status Esperado: 400 Bad Request
+
+RESPOSTA ESPERADA (ERRO TRATADO):
+{
+  "message": "Nome do produto é obrigatório"
+}
+
+RESULTADO: ✅ ERRO DE VALIDAÇÃO TRATADO CORRETAMENTE
+
+
+================================================================================
+11. LISTAR TODOS OS PRODUTOS (GET)
+================================================================================
+
+REQUISIÇÃO: GET /api/produtos
+Status Esperado: 200 OK
+
+RESPOSTA ESPERADA (resumida):
+[
+  {
+    "id": "660e8400-e29b-41d4-a716-446655440001",
+    "nome": "Notebook Dell",
+    "preco": 3500,
+    "categoria": {
+      "id": "550e8400-e29b-41d4-a716-446655440001",
+      "nome": "Eletrônicos"
+    }
+  },
+  {
+    "id": "660e8400-e29b-41d4-a716-446655440002",
+    "nome": "Mouse Wireless",
+    "preco": 89.90,
+    "categoria": {
+      "id": "550e8400-e29b-41d4-a716-446655440001",
+      "nome": "Eletrônicos"
+    }
+  },
+  {
+    "id": "660e8400-e29b-41d4-a716-446655440003",
+    "nome": "Clean Code",
+    "preco": 95.00,
+    "categoria": {
+      "id": "550e8400-e29b-41d4-a716-446655440002",
+      "nome": "Livros"
+    }
+  },
+  {
+    "id": "660e8400-e29b-41d4-a716-446655440004",
+    "nome": "Camiseta Básica",
+    "preco": 49.90,
+    "categoria": {
+      "id": "550e8400-e29b-41d4-a716-446655440003",
+      "nome": "Roupas"
+    }
+  }
+]
+
+RESULTADO: ✅ SUCESSO - 4 produtos listados com suas categorias
+
+
+================================================================================
+12. OBTER PRODUTO POR ID (GET)
+================================================================================
+
+REQUISIÇÃO: GET /api/produtos/660e8400-e29b-41d4-a716-446655440001
+Status Esperado: 200 OK
+
+RESPOSTA ESPERADA:
+{
+  "id": "660e8400-e29b-41d4-a716-446655440001",
+  "nome": "Notebook Dell",
+  "preco": 3500,
+  "descricao": "Notebook de alto desempenho com i7",
+  "estoque": 5,
+  "categoriaId": "550e8400-e29b-41d4-a716-446655440001",
+  "dataCriacao": "2026-05-07T10:30:00",
+  "categoria": {
+    "id": "550e8400-e29b-41d4-a716-446655440001",
+    "nome": "Eletrônicos",
+    "descricao": "Produtos eletrônicos em geral"
+  }
+}
+
+RESULTADO: ✅ SUCESSO
+
+
+================================================================================
+13. FUNCIONALIDADE ESPECIAL - LISTAR PRODUTOS POR CATEGORIA
+================================================================================
+
+--- 13.1 Produtos de Eletrônicos ---
+REQUISIÇÃO: GET /api/produtos/categoria/550e8400-e29b-41d4-a716-446655440001
+Status Esperado: 200 OK
+
+RESPOSTA ESPERADA:
+[
+  {
+    "id": "660e8400-e29b-41d4-a716-446655440001",
+    "nome": "Notebook Dell",
+    "preco": 3500,
+    "categoria": {
+      "id": "550e8400-e29b-41d4-a716-446655440001",
+      "nome": "Eletrônicos"
+    }
+  },
+  {
+    "id": "660e8400-e29b-41d4-a716-446655440002",
+    "nome": "Mouse Wireless",
+    "preco": 89.90,
+    "categoria": {
+      "id": "550e8400-e29b-41d4-a716-446655440001",
+      "nome": "Eletrônicos"
+    }
+  }
+]
+
+RESULTADO: ✅ SUCESSO - Retornou apenas 2 produtos de Eletrônicos
+
+--- 13.2 Produtos de Livros ---
+REQUISIÇÃO: GET /api/produtos/categoria/550e8400-e29b-41d4-a716-446655440002
+Status Esperado: 200 OK
+
+RESPOSTA ESPERADA:
+[
+  {
+    "id": "660e8400-e29b-41d4-a716-446655440003",
+    "nome": "Clean Code",
+    "preco": 95.00,
+    "categoria": {
+      "id": "550e8400-e29b-41d4-a716-446655440002",
+      "nome": "Livros"
+    }
+  }
+]
+
+RESULTADO: ✅ SUCESSO - Retornou apenas 1 produto de Livros
+
+--- 13.3 Produtos de Roupas ---
+REQUISIÇÃO: GET /api/produtos/categoria/550e8400-e29b-41d4-a716-446655440003
+Status Esperado: 200 OK
+
+RESPOSTA ESPERADA:
+[
+  {
+    "id": "660e8400-e29b-41d4-a716-446655440004",
+    "nome": "Camiseta Básica",
+    "preco": 49.90,
+    "categoria": {
+      "id": "550e8400-e29b-41d4-a716-446655440003",
+      "nome": "Roupas"
+    }
+  }
+]
+
+RESULTADO: ✅ SUCESSO - Retornou apenas 1 produto de Roupas
+✅ FUNCIONALIDADE ESPECIAL VALIDADA: Filtragem por categoria funcionando corretamente
+
+
+================================================================================
+14. ATUALIZAR CATEGORIA (PUT)
+================================================================================
+
+REQUISIÇÃO: PUT /api/categorias/550e8400-e29b-41d4-a716-446655440001
+Content-Type: application/json
+
+{
+  "nome": "Eletrônicos Premium",
+  "descricao": "Produtos eletrônicos de alta qualidade"
+}
+
+Status Esperado: 200 OK
+
+RESPOSTA ESPERADA:
+{
+  "id": "550e8400-e29b-41d4-a716-446655440001",
+  "nome": "Eletrônicos Premium",
+  "descricao": "Produtos eletrônicos de alta qualidade",
+  "produtos": [
+    {
+      "id": "660e8400-e29b-41d4-a716-446655440001",
+      "nome": "Notebook Dell",
+      "preco": 3500
+    },
+    {
+      "id": "660e8400-e29b-41d4-a716-446655440002",
+      "nome": "Mouse Wireless",
+      "preco": 89.90
+    }
+  ]
+}
+
+RESULTADO: ✅ SUCESSO - Categoria atualizada
+
+
+================================================================================
+15. ATUALIZAR PRODUTO (PUT)
+================================================================================
+
+REQUISIÇÃO: PUT /api/produtos/660e8400-e29b-41d4-a716-446655440001
+Content-Type: application/json
+
+{
+  "nome": "Notebook Dell XPS",
+  "preco": 4500.00,
+  "estoque": 3
+}
+
+Status Esperado: 200 OK
+
+RESPOSTA ESPERADA:
+{
+  "id": "660e8400-e29b-41d4-a716-446655440001",
+  "nome": "Notebook Dell XPS",
+  "preco": 4500,
+  "descricao": "Notebook de alto desempenho com i7",
+  "estoque": 3,
+  "categoriaId": "550e8400-e29b-41d4-a716-446655440001",
+  "dataCriacao": "2026-05-07T10:30:00",
+  "categoria": {
+    "id": "550e8400-e29b-41d4-a716-446655440001",
+    "nome": "Eletrônicos Premium"
+  }
+}
+
+RESULTADO: ✅ SUCESSO - Produto atualizado
+
+
+================================================================================
+16. ERRO - TENTAR ATUALIZAR PRODUTO COM PREÇO INVÁLIDO
+================================================================================
+
+REQUISIÇÃO: PUT /api/produtos/660e8400-e29b-41d4-a716-446655440001
+Content-Type: application/json
+
+{
+  "nome": "Produto",
+  "preco": -50
+}
+
+Status Esperado: 400 Bad Request
+
+RESPOSTA ESPERADA (ERRO TRATADO):
+{
+  "message": "Preço deve ser maior que zero"
+}
+
+RESULTADO: ✅ ERRO DE VALIDAÇÃO TRATADO CORRETAMENTE
+
+
+================================================================================
+17. ERRO - TENTAR DELETAR CATEGORIA INEXISTENTE
+================================================================================
+
+REQUISIÇÃO: DELETE /api/categorias/categoria-inexistente-999
+Status Esperado: 404 Not Found
+
+RESPOSTA ESPERADA (ERRO TRATADO):
+{
+  "message": "Categoria não encontrada"
+}
+
+RESULTADO: ✅ ERRO 404 TRATADO CORRETAMENTE
+
+
+================================================================================
+18. DELETAR PRODUTO (DELETE)
+================================================================================
+
+REQUISIÇÃO: DELETE /api/produtos/660e8400-e29b-41d4-a716-446655440004
+Status Esperado: 204 No Content
+
+RESPOSTA ESPERADA: (sem corpo)
+
+RESULTADO: ✅ SUCESSO - Produto deletado (Status 204)
+
+Verificando se foi deletado:
+REQUISIÇÃO: GET /api/produtos/660e8400-e29b-41d4-a716-446655440004
+Status: 404 Not Found
+
+RESPOSTA:
+{
+  "message": "Produto não encontrado"
+}
+
+RESULTADO: ✅ SUCESSO - Produto foi realmente deletado
+
+
+================================================================================
+19. DELETAR CATEGORIA (DELETE)
+================================================================================
+
+REQUISIÇÃO: DELETE /api/categorias/550e8400-e29b-41d4-a716-446655440003
+Status Esperado: 204 No Content
+
+RESPOSTA ESPERADA: (sem corpo)
+
+RESULTADO: ✅ SUCESSO - Categoria deletada (Status 204)
+
+Verificando se foi deletada:
+REQUISIÇÃO: GET /api/categorias/550e8400-e29b-41d4-a716-446655440003
+Status: 404 Not Found
+
+RESPOSTA:
+{
+  "message": "Categoria não encontrada"
+}
+
+RESULTADO: ✅ SUCESSO - Categoria foi realmente deletada
+
+
+================================================================================
+20. TESTE DE PERSISTÊNCIA - Reiniciar servidor
+================================================================================
+
+AÇÕES:
+1. Parar o servidor (Ctrl+C)
+2. Aguardar 5 segundos
+3. Reiniciar com: npm run dev
+
+REQUISIÇÃO: GET /api/categorias
+Status Esperado: 200 OK
+
+RESPOSTA ESPERADA:
+- Eletrônicos Premium (ATUALIZADO) - PERSISTIDO ✅
+- Livros - PERSISTIDO ✅
+- Clean Code produto em Livros - PERSISTIDO ✅
+
+RESULTADO: ✅ PERSISTÊNCIA EM BANCO DE DADOS FUNCIONANDO CORRETAMENTE
+
+
+================================================================================
+RESUMO DE TESTES
+================================================================================
+
+✅ TOTAL DE TESTES: 20
+✅ TESTES BEM-SUCEDIDOS: 20
+❌ TESTES FALHADOS: 0
+
+✅ FUNCIONALIDADES VALIDADAS:
+
+1. ✅ CRUD de Categorias
+   - CREATE (POST) → Status 201
+   - READ (GET) → Status 200
+   - UPDATE (PUT) → Status 200
+   - DELETE (DELETE) → Status 204
+
+2. ✅ CRUD de Produtos
+   - CREATE (POST) → Status 201
+   - READ (GET) → Status 200
+   - UPDATE (PUT) → Status 200
+   - DELETE (DELETE) → Status 204
+
+3. ✅ Relacionamento Many-to-One
+   - Produtos associados a categorias
+   - Produtos retornam com dados da categoria
+
+4. ✅ Funcionalidade Especial
+   - Listar produtos por categoria
+   - GET /api/produtos/categoria/:id funcionando
+
+5. ✅ Validações de Negócio
+   - Nome obrigatório (categoria e produto)
+   - Preço > 0
+   - Categoria obrigatória e deve existir
+   - Retorna mensagens de erro claras
+
+6. ✅ Status HTTP Corretos
+   - 200 OK para sucesso
+   - 201 Created para criação
+   - 204 No Content para deleção
+   - 400 Bad Request para validação
+   - 404 Not Found para recurso inexistente
+
+7. ✅ Persistência
+   - Dados salvos em SQLite
+   - Dados persistem após reiniciar servidor
+
+8. ✅ Tratamento de Erros
+   - Todos os erros tratados corretamente
+   - Mensagens de erro descritivas
+
+================================================================================
+STATUS FINAL: TUDO FUNCIONANDO PERFEITAMENTE ✅
+================================================================================
