@@ -1,0 +1,219 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-05-08T00:00:00.000Z",
+  "__export_source": "insomnia.desktop.app:v8.6.1",
+  "resources": [
+    {
+      "_id": "wrk_produtos_categorias",
+      "_type": "workspace",
+      "parentId": null,
+      "name": "📦 PROJETO: Gerenciamento de Produtos e Categorias",
+      "description": "API RESTful: CRUDs, Relacionamentos e Validações (TypeORM + SQLite)",
+      "scope": "collection"
+    },
+    {
+      "_id": "env_local",
+      "_type": "environment",
+      "parentId": "wrk_produtos_categorias",
+      "name": "Desenvolvimento",
+      "data": {
+        "baseUrl": "http://localhost:3000/api"
+      },
+      "color": "#00ff00",
+      "isPrivate": false,
+      "metaSortKey": 1
+    },
+    {
+      "_id": "fld_1_cat",
+      "_type": "request_group",
+      "parentId": "wrk_produtos_categorias",
+      "name": "1. Categorias (CRUD)",
+      "metaSortKey": -100
+    },
+    {
+      "_id": "req_cat_create",
+      "_type": "request",
+      "parentId": "fld_1_cat",
+      "url": "{{ _.baseUrl }}/categorias",
+      "name": "Criar Categoria",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Eletrônicos\",\n  \"descricao\": \"Equipamentos eletrônicos em geral\"\n}"
+      },
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "metaSortKey": -100
+    },
+    {
+      "_id": "req_cat_list",
+      "_type": "request",
+      "parentId": "fld_1_cat",
+      "url": "{{ _.baseUrl }}/categorias",
+      "name": "Listar Todas",
+      "method": "GET",
+      "metaSortKey": -200
+    },
+    {
+      "_id": "req_cat_get",
+      "_type": "request",
+      "parentId": "fld_1_cat",
+      "url": "{{ _.baseUrl }}/categorias/COLOQUE_O_ID_AQUI",
+      "name": "Obter por ID",
+      "method": "GET",
+      "metaSortKey": -300
+    },
+    {
+      "_id": "req_cat_update",
+      "_type": "request",
+      "parentId": "fld_1_cat",
+      "url": "{{ _.baseUrl }}/categorias/COLOQUE_O_ID_AQUI",
+      "name": "Atualizar Categoria",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Eletrônicos Premium\"\n}"
+      },
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "metaSortKey": -400
+    },
+    {
+      "_id": "req_cat_delete",
+      "_type": "request",
+      "parentId": "fld_1_cat",
+      "url": "{{ _.baseUrl }}/categorias/COLOQUE_O_ID_AQUI",
+      "name": "Deletar Categoria",
+      "method": "DELETE",
+      "metaSortKey": -500
+    },
+    {
+      "_id": "fld_2_prod",
+      "_type": "request_group",
+      "parentId": "wrk_produtos_categorias",
+      "name": "2. Produtos (CRUD & Relacionamento)",
+      "metaSortKey": -200
+    },
+    {
+      "_id": "req_prod_create",
+      "_type": "request",
+      "parentId": "fld_2_prod",
+      "url": "{{ _.baseUrl }}/produtos",
+      "name": "Criar Produto (Many-to-One)",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Smartphone X\",\n  \"preco\": 2500.00,\n  \"categoriaId\": \"COLOQUE_O_ID_DA_CATEGORIA_AQUI\",\n  \"descricao\": \"Smartphone de última geração\",\n  \"estoque\": 15\n}"
+      },
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "metaSortKey": -100
+    },
+    {
+      "_id": "req_prod_list",
+      "_type": "request",
+      "parentId": "fld_2_prod",
+      "url": "{{ _.baseUrl }}/produtos",
+      "name": "Listar Todos",
+      "method": "GET",
+      "metaSortKey": -200
+    },
+    {
+      "_id": "req_prod_by_cat",
+      "_type": "request",
+      "parentId": "fld_2_prod",
+      "url": "{{ _.baseUrl }}/produtos/categoria/COLOQUE_O_ID_DA_CATEGORIA_AQUI",
+      "name": "Filtrar por Categoria",
+      "method": "GET",
+      "metaSortKey": -300
+    },
+    {
+      "_id": "req_prod_get",
+      "_type": "request",
+      "parentId": "fld_2_prod",
+      "url": "{{ _.baseUrl }}/produtos/COLOQUE_O_ID_DO_PRODUTO_AQUI",
+      "name": "Obter por ID",
+      "method": "GET",
+      "metaSortKey": -400
+    },
+    {
+      "_id": "req_prod_update",
+      "_type": "request",
+      "parentId": "fld_2_prod",
+      "url": "{{ _.baseUrl }}/produtos/COLOQUE_O_ID_DO_PRODUTO_AQUI",
+      "name": "Atualizar Produto",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"preco\": 2300.00,\n  \"estoque\": 20\n}"
+      },
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "metaSortKey": -500
+    },
+    {
+      "_id": "req_prod_delete",
+      "_type": "request",
+      "parentId": "fld_2_prod",
+      "url": "{{ _.baseUrl }}/produtos/COLOQUE_O_ID_DO_PRODUTO_AQUI",
+      "name": "Deletar Produto",
+      "method": "DELETE",
+      "metaSortKey": -600
+    },
+    {
+      "_id": "fld_3_val",
+      "_type": "request_group",
+      "parentId": "wrk_produtos_categorias",
+      "name": "3. Validações de Erro (Regras de Negócio)",
+      "metaSortKey": -300
+    },
+    {
+      "_id": "err_cat_empty",
+      "_type": "request",
+      "parentId": "fld_3_val",
+      "url": "{{ _.baseUrl }}/categorias",
+      "name": "Erro: Categoria sem Nome",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"\",\n  \"descricao\": \"Teste\"\n}"
+      },
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "metaSortKey": -100
+    },
+    {
+      "_id": "err_prod_price",
+      "_type": "request",
+      "parentId": "fld_3_val",
+      "url": "{{ _.baseUrl }}/produtos",
+      "name": "Erro: Preço Zero ou Negativo",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Produto Grátis\",\n  \"preco\": 0,\n  \"categoriaId\": \"ID_VALIDO\"\n}"
+      },
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "metaSortKey": -200
+    },
+    {
+      "_id": "err_prod_cat_missing",
+      "_type": "request",
+      "parentId": "fld_3_val",
+      "url": "{{ _.baseUrl }}/produtos",
+      "name": "Erro: Categoria Inexistente",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Produto Sem Categoria\",\n  \"preco\": 100,\n  \"categoriaId\": \"00000000-0000-0000-0000-000000000000\"\n}"
+      },
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "metaSortKey": -300
+    },
+    {
+      "_id": "err_404_cat",
+      "_type": "request",
+      "parentId": "fld_3_val",
+      "url": "{{ _.baseUrl }}/categorias/999-inexistente",
+      "name": "Erro: 404 Categoria não encontrada",
+      "method": "GET",
+      "metaSortKey": -400
+    }
+  ]
+}
