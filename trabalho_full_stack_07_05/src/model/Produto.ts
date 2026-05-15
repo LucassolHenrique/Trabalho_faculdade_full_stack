@@ -4,27 +4,27 @@ import { Categoria } from './Categoria';
 @Entity()
 export class Produto {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id!: string;
 
   @Column()
-  nome: string;
+  nome!: string;
 
   @Column('decimal', { precision: 10, scale: 2 })
-  preco: number;
+  preco!: number;
 
   @Column({ nullable: true })
-  descricao: string;
+  descricao?: string;
 
   @Column({ default: 0 })
-  estoque: number;
+  estoque!: number;
 
   @ManyToOne(() => Categoria, (categoria) => categoria.produtos)
   @JoinColumn({ name: 'categoriaId' })
-  categoria: Categoria;
+  categoria!: Categoria;
 
   @Column({ nullable: true })
-  categoriaId: string;
+  categoriaId?: string;
 
   @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
-  dataCriacao: Date;
+  dataCriacao!: Date;
 }

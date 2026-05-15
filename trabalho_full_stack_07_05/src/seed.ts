@@ -2,6 +2,8 @@ import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import { Categoria } from './model/Categoria';
 import { Produto } from './model/Produto';
+import { Usuario } from './model/Usuario';
+import bcryptjs from 'bcryptjs';
 
 // Dados de exemplo para popular o banco de dados
 const dataSource = new DataSource({
@@ -9,7 +11,7 @@ const dataSource = new DataSource({
   database: 'database.sqlite',
   synchronize: true,
   logging: false,
-  entities: [Categoria, Produto],
+  entities: [Categoria, Produto, Usuario],
   migrations: [],
   subscribers: [],
 });
@@ -21,10 +23,29 @@ async function seedDatabase() {
 
     const categoriaRepository = dataSource.getRepository(Categoria);
     const produtoRepository = dataSource.getRepository(Produto);
+    const usuarioRepository = dataSource.getRepository(Usuario);
 
     // Limpar dados existentes
     await produtoRepository.clear();
     await categoriaRepository.clear();
+    await usuarioRepository.clear();
+
+    // Criar usuários de teste
+    const senhaHash1 = await bcryptjs.hash('senha123', 10);
+    const senhaHash2 = await bcryptjs.hash('senha456', 10);
+
+    const usuario1 = usuarioRepository.create({
+      email: 'admin@example.com',
+      senha: senhaHash1,
+    });
+
+    const usuario2 = usuarioRepository.create({
+      email: 'user@example.com',
+      senha: senhaHash2,
+    });
+
+    await usuarioRepository.save([usuario1, usuario2]);
+    console.log('✅ Usuários criados (admin@example.com / user@example.com)');
 
     // Criar categorias
     const categoria1 = categoriaRepository.create({
@@ -103,6 +124,9 @@ async function seedDatabase() {
     console.log('✅ Produtos criados');
 
     console.log('\n✅ Banco de dados populado com sucesso!');
+    console.log('\nUsuários de teste:');
+    console.log('- Email: admin@example.com | Senha: senha123');
+    console.log('- Email: user@example.com | Senha: senha456');
     console.log('\nCategorias:');
     console.log('- Eletrônicos');
     console.log('- Livros');

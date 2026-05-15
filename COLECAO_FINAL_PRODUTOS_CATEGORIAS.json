@@ -1,219 +1,263 @@
 {
   "_type": "export",
   "__export_format": 4,
-  "__export_date": "2026-05-08T00:00:00.000Z",
+  "__export_date": "2026-05-14T22:00:00.000Z",
   "__export_source": "insomnia.desktop.app:v8.6.1",
   "resources": [
     {
-      "_id": "wrk_produtos_categorias",
+      "_id": "wrk_api_produtos",
       "_type": "workspace",
       "parentId": null,
-      "name": "📦 PROJETO: Gerenciamento de Produtos e Categorias",
-      "description": "API RESTful: CRUDs, Relacionamentos e Validações (TypeORM + SQLite)",
+      "name": "🚀 API Gerenciamento Produtos & Categorias (JWT)",
+      "description": "API RESTful com Autenticação JWT, CRUDs, Relacionamentos e Validações",
       "scope": "collection"
     },
     {
-      "_id": "env_local",
+      "_id": "env_desenvolvimento",
       "_type": "environment",
-      "parentId": "wrk_produtos_categorias",
+      "parentId": "wrk_api_produtos",
       "name": "Desenvolvimento",
       "data": {
-        "baseUrl": "http://localhost:3000/api"
+        "baseUrl": "http://localhost:3000/api",
+        "token": "COLE_SEU_TOKEN_AQUI_APOS_LOGIN"
       },
       "color": "#00ff00",
       "isPrivate": false,
       "metaSortKey": 1
     },
     {
-      "_id": "fld_1_cat",
+      "_id": "fld_auth",
       "_type": "request_group",
-      "parentId": "wrk_produtos_categorias",
-      "name": "1. Categorias (CRUD)",
-      "metaSortKey": -100
+      "parentId": "wrk_api_produtos",
+      "name": "🔐 Autenticação (JWT)",
+      "description": "Login e Registro de Usuários",
+      "metaSortKey": -300
     },
     {
-      "_id": "req_cat_create",
+      "_id": "req_auth_register",
       "_type": "request",
-      "parentId": "fld_1_cat",
-      "url": "{{ _.baseUrl }}/categorias",
-      "name": "Criar Categoria",
+      "parentId": "fld_auth",
+      "url": "{{ _.baseUrl }}/auth/register",
+      "name": "📝 Registrar Novo Usuário",
       "method": "POST",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"nome\": \"Eletrônicos\",\n  \"descricao\": \"Equipamentos eletrônicos em geral\"\n}"
+        "text": "{\n  \"email\": \"novo.usuario@example.com\",\n  \"senha\": \"senha123\"\n}"
       },
-      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
       "metaSortKey": -100
+    },
+    {
+      "_id": "req_auth_login",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "url": "{{ _.baseUrl }}/auth/login",
+      "name": "🔑 Login (Obter Token)",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"admin@example.com\",\n  \"senha\": \"senha123\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "metaSortKey": -50,
+      "description": "Usuários de teste: admin@example.com (senha123) ou user@example.com (senha456)\n\n**Copie o 'token' da resposta e cole em: env_desenvolvimento > token**"
+    },
+    {
+      "_id": "fld_categorias",
+      "_type": "request_group",
+      "parentId": "wrk_api_produtos",
+      "name": "📂 Categorias (CRUD)",
+      "description": "Requer autenticação JWT",
+      "metaSortKey": -200
     },
     {
       "_id": "req_cat_list",
       "_type": "request",
-      "parentId": "fld_1_cat",
+      "parentId": "fld_categorias",
       "url": "{{ _.baseUrl }}/categorias",
-      "name": "Listar Todas",
+      "name": "📋 Listar Todas as Categorias",
       "method": "GET",
-      "metaSortKey": -200
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ],
+      "metaSortKey": -100
     },
     {
       "_id": "req_cat_get",
       "_type": "request",
-      "parentId": "fld_1_cat",
-      "url": "{{ _.baseUrl }}/categorias/COLOQUE_O_ID_AQUI",
-      "name": "Obter por ID",
+      "parentId": "fld_categorias",
+      "url": "{{ _.baseUrl }}/categorias/311154b8-8402-4b1c-a00d-3341f5c2c6cb",
+      "name": "🔍 Obter Categoria por ID",
       "method": "GET",
-      "metaSortKey": -300
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ],
+      "metaSortKey": -90,
+      "description": "Substitua o ID com um ID válido de categoria"
+    },
+    {
+      "_id": "req_cat_create",
+      "_type": "request",
+      "parentId": "fld_categorias",
+      "url": "{{ _.baseUrl }}/categorias",
+      "name": "➕ Criar Nova Categoria",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Games\",\n  \"descricao\": \"Jogos e consoles\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ],
+      "metaSortKey": -80
     },
     {
       "_id": "req_cat_update",
       "_type": "request",
-      "parentId": "fld_1_cat",
-      "url": "{{ _.baseUrl }}/categorias/COLOQUE_O_ID_AQUI",
-      "name": "Atualizar Categoria",
+      "parentId": "fld_categorias",
+      "url": "{{ _.baseUrl }}/categorias/311154b8-8402-4b1c-a00d-3341f5c2c6cb",
+      "name": "✏️ Atualizar Categoria",
       "method": "PUT",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"nome\": \"Eletrônicos Premium\"\n}"
+        "text": "{\n  \"nome\": \"Eletrônicos Premium\",\n  \"descricao\": \"Produtos eletrônicos de alta qualidade\"\n}"
       },
-      "headers": [{ "name": "Content-Type", "value": "application/json" }],
-      "metaSortKey": -400
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ],
+      "metaSortKey": -70,
+      "description": "Substitua o ID com um ID válido de categoria"
     },
     {
       "_id": "req_cat_delete",
       "_type": "request",
-      "parentId": "fld_1_cat",
-      "url": "{{ _.baseUrl }}/categorias/COLOQUE_O_ID_AQUI",
-      "name": "Deletar Categoria",
+      "parentId": "fld_categorias",
+      "url": "{{ _.baseUrl }}/categorias/311154b8-8402-4b1c-a00d-3341f5c2c6cb",
+      "name": "🗑️ Deletar Categoria",
       "method": "DELETE",
-      "metaSortKey": -500
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ],
+      "metaSortKey": -60,
+      "description": "Substitua o ID com um ID válido de categoria"
     },
     {
-      "_id": "fld_2_prod",
+      "_id": "fld_produtos",
       "_type": "request_group",
-      "parentId": "wrk_produtos_categorias",
-      "name": "2. Produtos (CRUD & Relacionamento)",
-      "metaSortKey": -200
-    },
-    {
-      "_id": "req_prod_create",
-      "_type": "request",
-      "parentId": "fld_2_prod",
-      "url": "{{ _.baseUrl }}/produtos",
-      "name": "Criar Produto (Many-to-One)",
-      "method": "POST",
-      "body": {
-        "mimeType": "application/json",
-        "text": "{\n  \"nome\": \"Smartphone X\",\n  \"preco\": 2500.00,\n  \"categoriaId\": \"COLOQUE_O_ID_DA_CATEGORIA_AQUI\",\n  \"descricao\": \"Smartphone de última geração\",\n  \"estoque\": 15\n}"
-      },
-      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "parentId": "wrk_api_produtos",
+      "name": "🛒 Produtos (CRUD & Relacionamentos)",
+      "description": "Requer autenticação JWT",
       "metaSortKey": -100
     },
     {
       "_id": "req_prod_list",
       "_type": "request",
-      "parentId": "fld_2_prod",
+      "parentId": "fld_produtos",
       "url": "{{ _.baseUrl }}/produtos",
-      "name": "Listar Todos",
+      "name": "📋 Listar Todos os Produtos",
       "method": "GET",
-      "metaSortKey": -200
-    },
-    {
-      "_id": "req_prod_by_cat",
-      "_type": "request",
-      "parentId": "fld_2_prod",
-      "url": "{{ _.baseUrl }}/produtos/categoria/COLOQUE_O_ID_DA_CATEGORIA_AQUI",
-      "name": "Filtrar por Categoria",
-      "method": "GET",
-      "metaSortKey": -300
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ],
+      "metaSortKey": -100
     },
     {
       "_id": "req_prod_get",
       "_type": "request",
-      "parentId": "fld_2_prod",
-      "url": "{{ _.baseUrl }}/produtos/COLOQUE_O_ID_DO_PRODUTO_AQUI",
-      "name": "Obter por ID",
+      "parentId": "fld_produtos",
+      "url": "{{ _.baseUrl }}/produtos/f6209858-7c23-4ef8-9356-1336f9c3d373",
+      "name": "🔍 Obter Produto por ID",
       "method": "GET",
-      "metaSortKey": -400
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ],
+      "metaSortKey": -90,
+      "description": "Substitua o ID com um ID válido de produto"
+    },
+    {
+      "_id": "req_prod_by_categoria",
+      "_type": "request",
+      "parentId": "fld_produtos",
+      "url": "{{ _.baseUrl }}/produtos/categoria/311154b8-8402-4b1c-a00d-3341f5c2c6cb",
+      "name": "📦 Listar Produtos por Categoria",
+      "method": "GET",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ],
+      "metaSortKey": -80,
+      "description": "Funcionalidade: Manipula duas entidades (Produto + Categoria)"
+    },
+    {
+      "_id": "req_prod_create",
+      "_type": "request",
+      "parentId": "fld_produtos",
+      "url": "{{ _.baseUrl }}/produtos",
+      "name": "➕ Criar Novo Produto",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Monitor 144Hz\",\n  \"preco\": 1299.99,\n  \"categoriaId\": \"311154b8-8402-4b1c-a00d-3341f5c2c6cb\",\n  \"descricao\": \"Monitor gamer com taxa de refresh 144Hz\",\n  \"estoque\": 5\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ],
+      "metaSortKey": -70,
+      "description": "Validações: nome obrigatório, preco > 0, categoriaId deve existir"
     },
     {
       "_id": "req_prod_update",
       "_type": "request",
-      "parentId": "fld_2_prod",
-      "url": "{{ _.baseUrl }}/produtos/COLOQUE_O_ID_DO_PRODUTO_AQUI",
-      "name": "Atualizar Produto",
+      "parentId": "fld_produtos",
+      "url": "{{ _.baseUrl }}/produtos/f6209858-7c23-4ef8-9356-1336f9c3d373",
+      "name": "✏️ Atualizar Produto",
       "method": "PUT",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"preco\": 2300.00,\n  \"estoque\": 20\n}"
+        "text": "{\n  \"nome\": \"Notebook Dell XPS 15\",\n  \"preco\": 5999.99,\n  \"estoque\": 3,\n  \"descricao\": \"Notebook premium com processador i9\"\n}"
       },
-      "headers": [{ "name": "Content-Type", "value": "application/json" }],
-      "metaSortKey": -500
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ],
+      "metaSortKey": -60,
+      "description": "Substitua o ID com um ID válido de produto"
     },
     {
       "_id": "req_prod_delete",
       "_type": "request",
-      "parentId": "fld_2_prod",
-      "url": "{{ _.baseUrl }}/produtos/COLOQUE_O_ID_DO_PRODUTO_AQUI",
-      "name": "Deletar Produto",
+      "parentId": "fld_produtos",
+      "url": "{{ _.baseUrl }}/produtos/f6209858-7c23-4ef8-9356-1336f9c3d373",
+      "name": "🗑️ Deletar Produto",
       "method": "DELETE",
-      "metaSortKey": -600
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ _.token }}" }
+      ],
+      "metaSortKey": -50,
+      "description": "Substitua o ID com um ID válido de produto"
     },
     {
-      "_id": "fld_3_val",
+      "_id": "fld_saude",
       "_type": "request_group",
-      "parentId": "wrk_produtos_categorias",
-      "name": "3. Validações de Erro (Regras de Negócio)",
-      "metaSortKey": -300
+      "parentId": "wrk_api_produtos",
+      "name": "💚 Health Check (Sem Auth)",
+      "metaSortKey": -50
     },
     {
-      "_id": "err_cat_empty",
+      "_id": "req_health",
       "_type": "request",
-      "parentId": "fld_3_val",
-      "url": "{{ _.baseUrl }}/categorias",
-      "name": "Erro: Categoria sem Nome",
-      "method": "POST",
-      "body": {
-        "mimeType": "application/json",
-        "text": "{\n  \"nome\": \"\",\n  \"descricao\": \"Teste\"\n}"
-      },
-      "headers": [{ "name": "Content-Type", "value": "application/json" }],
-      "metaSortKey": -100
-    },
-    {
-      "_id": "err_prod_price",
-      "_type": "request",
-      "parentId": "fld_3_val",
-      "url": "{{ _.baseUrl }}/produtos",
-      "name": "Erro: Preço Zero ou Negativo",
-      "method": "POST",
-      "body": {
-        "mimeType": "application/json",
-        "text": "{\n  \"nome\": \"Produto Grátis\",\n  \"preco\": 0,\n  \"categoriaId\": \"ID_VALIDO\"\n}"
-      },
-      "headers": [{ "name": "Content-Type", "value": "application/json" }],
-      "metaSortKey": -200
-    },
-    {
-      "_id": "err_prod_cat_missing",
-      "_type": "request",
-      "parentId": "fld_3_val",
-      "url": "{{ _.baseUrl }}/produtos",
-      "name": "Erro: Categoria Inexistente",
-      "method": "POST",
-      "body": {
-        "mimeType": "application/json",
-        "text": "{\n  \"nome\": \"Produto Sem Categoria\",\n  \"preco\": 100,\n  \"categoriaId\": \"00000000-0000-0000-0000-000000000000\"\n}"
-      },
-      "headers": [{ "name": "Content-Type", "value": "application/json" }],
-      "metaSortKey": -300
-    },
-    {
-      "_id": "err_404_cat",
-      "_type": "request",
-      "parentId": "fld_3_val",
-      "url": "{{ _.baseUrl }}/categorias/999-inexistente",
-      "name": "Erro: 404 Categoria não encontrada",
+      "parentId": "fld_saude",
+      "url": "http://localhost:3000/api/health",
+      "name": "✅ Health Check",
       "method": "GET",
-      "metaSortKey": -400
+      "metaSortKey": -100,
+      "description": "Não requer autenticação"
     }
   ]
 }

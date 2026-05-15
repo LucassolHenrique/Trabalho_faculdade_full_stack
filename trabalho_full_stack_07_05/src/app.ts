@@ -1,16 +1,23 @@
 import 'reflect-metadata';
 import express from 'express';
+import swaggerUi from 'swagger-ui-express';
 import { DataSource } from 'typeorm';
 import { Categoria } from './model/Categoria';
 import { Produto } from './model/Produto';
+import { Usuario } from './model/Usuario';
 import { CategoriaRepository } from './repository/CategoriaRepository';
 import { ProdutoRepository } from './repository/ProdutoRepository';
 import { CategoriaService } from './service/CategoriaService';
 import { ProdutoService } from './service/ProdutoService';
+import { AuthService } from './service/AuthService';
 import { CategoriaController } from './controller/CategoriaController';
 import { ProdutoController } from './controller/ProdutoController';
+import { AuthController } from './controller/AuthController';
 import { createCategoriaRouter } from './router/categoriaRouter';
 import { createProdutoRouter } from './router/produtoRouter';
+import { createAuthRouter } from './router/authRouter';
+import { authenticateToken } from './middleware/authenticateToken';
+import { swaggerSpec } from './config/swagger';
 
 // Configuração do DataSource (banco de dados)
 const appDataSource = new DataSource({
@@ -18,7 +25,7 @@ const appDataSource = new DataSource({
   database: 'database.sqlite',
   synchronize: true,
   logging: false,
-  entities: [Categoria, Produto],
+  entities: [Categoria, Produto, Usuario],
   migrations: [],
   subscribers: [],
 });
@@ -30,6 +37,9 @@ const PORT = process.env.PORT || 3000;
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Swagger UI
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, { swaggerOptions: { persistAuthorization: true } }));
 
 // Rotas de saúde
 app.get('/api/health', (req, res) => {
@@ -49,14 +59,19 @@ appDataSource
     // Instanciar services
     const categoriaService = new CategoriaService(categoriaRepository);
     const produtoService = new ProdutoService(produtoRepository, categoriaService);
+    const authService = new AuthService(appDataSource);
 
     // Instanciar controllers
     const categoriaController = new CategoriaController(categoriaService);
     const produtoController = new ProdutoController(produtoService);
+    const authController = new AuthController(authService);
 
-    // Configurar rotas
-    app.use('/api/categorias', createCategoriaRouter(categoriaController));
-    app.use('/api/produtos', createProdutoRouter(produtoController));
+    // Rotas públicas (sem autenticação)
+    app.use('/api/auth', createAuthRouter(authController));
+
+    // Rotas protegidas (com autenticação)
+    app.use('/api/categorias', authenticateToken, createCategoriaRouter(categoriaController));
+    app.use('/api/produtos', authenticateToken, createProdutoRouter(produtoController));
 
     // Rota raiz
     app.get('/', (req, res) => {
